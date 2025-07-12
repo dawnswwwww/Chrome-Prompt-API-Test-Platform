@@ -6,14 +6,24 @@ export default defineConfig({
   plugins: [react()],
   base: process.env.GITHUB_PAGES ? '/chrome-prompt-api-test/' : '/',
   server: {
+    https: true,
     host: true,
     port: 5173,
     strictPort: false,
-    allowedHosts: ['.clackypaas.com']
+    allowedHosts: 'all',
+    proxy: {
+      '/api': {
+        target: 'https://localhost:5173',
+        changeOrigin: true,
+        secure: false
+      }
+    }
   },
   preview: {
+    https: true,
     host: true,
     port: 4173,
-    strictPort: false
+    strictPort: false,
+    allowedHosts: 'all'
   }
 })
